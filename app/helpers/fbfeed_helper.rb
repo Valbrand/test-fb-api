@@ -1,0 +1,2 @@
+module FbfeedHelper
+end
