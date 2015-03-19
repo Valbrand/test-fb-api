@@ -1,4 +1,6 @@
 class FbfeedController < ApplicationController
+	protect_from_forgery except: :process_update
+
   def index
   	@subs = $redis.smembers('subscriptions').sort
   end
@@ -62,8 +64,7 @@ class FbfeedController < ApplicationController
   end
 
   def process_update
-  	puts "Update received"
-  	puts params
+  	RequestWorker.perform_async(params)
   	render nothing: true
   end
 end
