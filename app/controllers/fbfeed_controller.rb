@@ -27,10 +27,16 @@ class FbfeedController < ApplicationController
   		end
   	end
 
+  	if Rails.env.production?
+  		callback_url = 'http://test-fb-api.herokuapp.com/subscription'
+  	else
+  		callback_url = 'http://valbrand.ngrok.com/subscription'
+  	end
+
   	begin
   		response = RestClient.post("https://graph.facebook.com/v2.2/#{params[:appid]}/subscriptions", {
   			:object => :page,
-  			:callback_url => 'http://valbrand.ngrok.com/subscription',
+  			:callback_url => callback_url,
   			:fields => 'feed,conversations',
   			:verify_token => 'abcdef',
   			:access_token => $redis.get('apptoken')
