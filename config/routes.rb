@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  post 'subscribe' => 'fbfeed#addsubscription'
+  post 'subscribe' => 'fbfeed#add_subscription'
+
+  get 'subscription' => 'fbfeed#verify_subscription'
+  post 'subscription' => 'fbfeed#process_update'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
